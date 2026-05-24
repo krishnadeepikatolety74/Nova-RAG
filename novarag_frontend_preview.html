@@ -1,0 +1,263 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cyan:#00ffe5;--purple:#b44fff;--pink:#ff4fb8;--amber:#ffb740;--green:#39ff8a;--red:#ff4f4f;--border:rgba(0,255,229,0.13);--mono:'Space Mono',monospace;--display:'Orbitron',monospace}
+#wrap{background:#020510;border-radius:10px;overflow:hidden;font-family:var(--mono);min-height:820px;position:relative}
+canvas#sc{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.z1{position:relative;z-index:1}
+
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);background:rgba(2,5,16,0.95);flex-wrap:wrap;gap:6px}
+.logo{font-family:var(--display);font-size:13px;font-weight:900;letter-spacing:.1em;color:var(--cyan)}
+.logo span{color:var(--purple)}
+.logo-sub{font-size:8px;color:rgba(0,255,229,.3);font-family:var(--mono);margin-left:8px}
+.hdr-right{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:8px;padding:3px 8px;border-radius:20px;border:1px solid;display:flex;align-items:center;gap:4px;letter-spacing:.05em;white-space:nowrap}
+.pc{background:rgba(0,255,229,.07);border-color:rgba(0,255,229,.3);color:var(--cyan)}
+.pp{background:rgba(180,79,255,.08);border-color:rgba(180,79,255,.3);color:var(--purple)}
+.pg{background:rgba(57,255,138,.07);border-color:rgba(57,255,138,.3);color:var(--green)}
+.pr{background:rgba(255,79,79,.07);border-color:rgba(255,79,79,.3);color:var(--red)}
+.blink{width:4px;height:4px;border-radius:50%;animation:blink 1.5s infinite;flex-shrink:0}
+.bc{background:var(--cyan)}.bp{background:var(--purple)}.bg2{background:var(--green)}.br2{background:var(--red)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+
+.model-bar{display:flex;align-items:center;gap:8px;padding:7px 16px;border-bottom:1px solid var(--border);background:rgba(2,5,16,.75);flex-wrap:wrap}
+.model-lbl{font-size:8px;color:rgba(0,255,229,.45);text-transform:uppercase;letter-spacing:.1em}
+.model-sel{background:rgba(0,20,50,.8);border:1px solid var(--border);border-radius:4px;color:var(--cyan);font-family:var(--mono);font-size:9px;padding:4px 8px}
+.mbtn{font-size:8px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:rgba(0,255,229,.07);color:var(--cyan);cursor:pointer;font-family:var(--mono);letter-spacing:.05em}
+.model-active{font-size:8px;color:var(--green);margin-left:auto}
+
+.modes{display:flex;gap:5px;padding:7px 16px;border-bottom:1px solid var(--border);background:rgba(2,5,16,.7);flex-wrap:wrap}
+.mbn{font-size:8px;padding:5px 11px;border-radius:4px;border:1px solid var(--border);background:transparent;color:rgba(0,255,229,.4);cursor:pointer;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase}
+.mbn.act{background:rgba(0,255,229,.1);border-color:var(--cyan);color:var(--cyan)}
+
+.main{display:flex;height:700px}
+.sidebar{width:200px;border-right:1px solid var(--border);display:flex;flex-direction:column;background:rgba(2,5,16,.65)}
+.center{flex:1;display:flex;flex-direction:column}
+.rcol{width:190px;border-left:1px solid var(--border);background:rgba(2,5,16,.65);display:flex;flex-direction:column}
+
+.sec{padding:11px;border-bottom:1px solid var(--border)}
+.sec-t{font-size:8px;text-transform:uppercase;letter-spacing:.12em;color:rgba(0,255,229,.45);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.dot3{width:3px;height:3px;border-radius:50%;background:var(--cyan)}
+
+.upz{border:1px dashed rgba(0,255,229,.18);border-radius:5px;padding:12px;text-align:center;background:rgba(0,255,229,.02)}
+.upz p{font-size:8px;color:rgba(0,255,229,.4);line-height:1.5}
+.upz span{color:var(--cyan)}
+.doc-item{display:flex;align-items:center;gap:5px;padding:5px 7px;background:rgba(0,255,229,.04);border:1px solid var(--border);border-radius:4px;margin-top:4px}
+.doc-name{flex:1;font-size:8px;color:#9de;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.stat-g{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sc2{background:rgba(0,255,229,.04);border:1px solid var(--border);border-radius:4px;padding:7px;text-align:center}
+.sv{font-size:15px;font-weight:700;color:var(--cyan);font-family:var(--display)}
+.sl{font-size:7px;color:rgba(0,255,229,.4);text-transform:uppercase;letter-spacing:.07em;margin-top:1px}
+
+.h-item{padding:6px 8px;background:rgba(0,255,229,.03);border:1px solid var(--border);border-radius:4px;margin-bottom:4px}
+.h-q{font-size:8px;color:#9de;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:2px}
+.h-m{display:flex;gap:5px}
+.h-mode{font-size:7px;color:var(--purple);text-transform:uppercase}
+.h-mdl{font-size:7px;color:var(--green)}
+.h-t{font-size:7px;color:rgba(0,255,229,.3)}
+
+.qsec{padding:12px;border-bottom:1px solid var(--border)}
+.qdesc{font-size:8px;color:rgba(0,255,229,.4);line-height:1.6;padding:6px 8px;background:rgba(0,255,229,.02);border:1px solid rgba(0,255,229,.07);border-radius:4px;margin-bottom:8px}
+.fake-ta{background:rgba(0,10,30,.8);border:1px solid var(--border);border-radius:5px;padding:9px;color:rgba(100,150,180,.5);font-family:var(--mono);font-size:9px;height:80px;display:flex;align-items:flex-start}
+.qfoot{display:flex;align-items:center;justify-content:space-between;margin-top:7px}
+.qhint{font-size:8px;color:rgba(0,255,229,.2)}
+.brow{display:flex;gap:5px}
+.btn-p{background:var(--cyan);color:#020510;border:none;border-radius:4px;padding:6px 12px;font-size:8px;font-family:var(--mono);font-weight:700;cursor:pointer;letter-spacing:.05em;text-transform:uppercase}
+.btn-g{background:transparent;color:rgba(0,255,229,.4);border:1px solid var(--border);border-radius:4px;padding:6px 10px;font-size:8px;font-family:var(--mono);cursor:pointer}
+
+.ans-area{flex:1;overflow:hidden;padding:12px;display:flex;flex-direction:column;gap:8px}
+.ans-card{background:rgba(5,15,40,.92);border:1px solid var(--border);border-radius:7px;overflow:hidden}
+.ans-top{padding:6px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,255,229,.02)}
+.ans-lbl{font-size:8px;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan)}
+.chips{display:flex;gap:3px}
+.chip{font-size:8px;padding:1px 6px;border-radius:20px}
+.chip-r{background:rgba(255,79,184,.1);border:1px solid rgba(255,79,184,.25);color:var(--pink)}
+.chip-g{background:rgba(57,255,138,.08);border:1px solid rgba(57,255,138,.25);color:var(--green)}
+.chip-m{background:rgba(0,255,229,.07);border:1px solid rgba(0,255,229,.2);color:var(--cyan)}
+.ans-body{padding:12px;font-size:10px;line-height:1.8;color:#b8d8e8}
+.cursor2{display:inline-block;width:2px;height:11px;background:var(--cyan);vertical-align:middle;animation:cb .6s infinite;margin-left:1px}
+@keyframes cb{0%,100%{opacity:1}50%{opacity:0}}
+.ans-foot{padding:6px 12px;border-top:1px solid var(--border);display:flex;gap:10px;background:rgba(2,5,16,.5)}
+.mf{font-size:8px;color:rgba(0,255,229,.3);display:flex;align-items:center;gap:3px}
+.mfv{color:var(--cyan)}
+
+.robo-wrap{display:flex;flex-direction:column;align-items:center;padding:12px 10px;gap:8px}
+.robo-name{font-family:var(--display);font-size:10px;color:var(--purple);letter-spacing:.08em;text-align:center}
+.robo-stage{font-size:8px;color:var(--pink);text-transform:uppercase;text-align:center;min-height:12px}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%}
+.pb{font-size:7px;padding:4px 3px;border-radius:4px;border:1px solid var(--border);background:transparent;color:rgba(180,79,255,.4);cursor:pointer;text-align:center;text-transform:uppercase;font-family:var(--mono)}
+.pb.sel{background:rgba(180,79,255,.12);border-color:var(--purple);color:var(--purple)}
+.thought-wrap{width:100%;background:rgba(180,79,255,.05);border:1px solid rgba(180,79,255,.15);border-radius:5px;padding:8px}
+.thought-lbl{font-size:7px;color:rgba(180,79,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.thought-txt{font-size:8px;color:rgba(180,79,255,.7);line-height:1.5;min-height:28px}
+</style>
+
+<div id="wrap">
+<canvas id="sc"></canvas>
+<div class="z1">
+
+<div class="hdr">
+  <div style="display:flex;align-items:center">
+    <div class="logo">NOVA<span>RAG</span><span class="logo-sub">OLLAMA · SPACE STATION</span></div>
+  </div>
+  <div class="hdr-right">
+    <div class="pill pc"><div class="blink bc"></div>LIVE</div>
+    <div class="pill pp"><div class="blink bp"></div>NOVA ROBO</div>
+    <div class="pill pg"><div class="blink bg2"></div>OLLAMA ONLINE</div>
+    <div class="pill pg"><div class="blink bg2"></div>WS LIVE</div>
+  </div>
+</div>
+
+<div class="model-bar">
+  <span class="model-lbl">🧠 Model:</span>
+  <select class="model-sel">
+    <option>llama3</option>
+    <option>mistral</option>
+    <option>gemma2</option>
+    <option>phi3</option>
+    <option>qwen2</option>
+  </select>
+  <input style="background:rgba(0,20,50,.8);border:1px solid var(--border);border-radius:4px;color:var(--cyan);font-family:var(--mono);font-size:9px;padding:4px 8px;outline:none;width:130px" placeholder="or type model name...">
+  <button class="mbtn">Set</button>
+  <button class="mbtn">↻ Refresh</button>
+  <div class="model-active">Model: llama3</div>
+</div>
+
+<div class="modes">
+  <button class="mbn act">❓ Q&A Docs</button>
+  <button class="mbn">💬 Chatbot</button>
+  <button class="mbn">🔍 Search</button>
+  <button class="mbn">⚡ Custom</button>
+</div>
+
+<div class="main">
+  <div class="sidebar">
+    <div class="sec">
+      <div class="sec-t"><div class="dot3"></div>Knowledge Base</div>
+      <div class="upz">
+        <div style="font-size:16px;color:var(--cyan);margin-bottom:4px">↑</div>
+        <p>Drop files or <span>browse</span></p>
+        <p style="margin-top:2px;font-size:7px">PDF · DOCX · TXT · MD · JSON</p>
+      </div>
+      <div class="doc-item"><span style="font-size:10px">📄</span><span class="doc-name">research_paper.pdf</span></div>
+      <div class="doc-item"><span style="font-size:10px">📄</span><span class="doc-name">notes.md</span></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t"><div class="dot3" style="background:var(--pink)"></div>Stats</div>
+      <div class="stat-g">
+        <div class="sc2"><div class="sv">4</div><div class="sl">Queries</div></div>
+        <div class="sc2"><div class="sv">2</div><div class="sl">Docs</div></div>
+        <div class="sc2"><div class="sv">18</div><div class="sl">Chunks</div></div>
+        <div class="sc2"><div class="sv">2.1k</div><div class="sl">Chars</div></div>
+      </div>
+    </div>
+    <div class="sec" style="flex:1;overflow:hidden">
+      <div class="sec-t"><div class="dot3" style="background:var(--amber)"></div>Query Log</div>
+      <div class="h-item"><div class="h-q">Summarize the research paper</div><div class="h-m"><span class="h-mode">qa</span><span class="h-mdl">llama3</span><span class="h-t">09:42</span></div></div>
+      <div class="h-item"><div class="h-q">What are the key findings?</div><div class="h-m"><span class="h-mode">search</span><span class="h-mdl">llama3</span><span class="h-t">09:38</span></div></div>
+    </div>
+  </div>
+
+  <div class="center">
+    <div class="qsec">
+      <div class="qdesc">Ask questions grounded in your uploaded documents. The RAG engine retrieves relevant chunks and feeds them to your local Ollama model.</div>
+      <div class="fake-ta">What are the main conclusions of the uploaded research paper?</div>
+      <div class="qfoot">
+        <span class="qhint">Ctrl+Enter to transmit</span>
+        <div class="brow">
+          <button class="btn-g">Clear</button>
+          <button class="btn-p">▶ Transmit</button>
+        </div>
+      </div>
+    </div>
+    <div class="ans-area">
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(0,255,229,.04);border:1px solid rgba(0,255,229,.12);border-radius:6px">
+        <div style="font-size:16px">🤖</div>
+        <div style="flex:1">
+          <div style="font-size:8px;color:var(--cyan);margin-bottom:4px">Streaming tokens from llama3...</div>
+          <div style="height:2px;background:rgba(0,255,229,.08);border-radius:2px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));width:72%;border-radius:2px"></div></div>
+        </div>
+      </div>
+      <div class="ans-card">
+        <div class="ans-top">
+          <div class="ans-lbl">🤖 Nova Robo Streaming</div>
+          <div class="chips"><div class="chip chip-r">live</div><div class="chip chip-g">llama3</div><div class="chip chip-m">qa</div></div>
+        </div>
+        <div class="ans-body">The research paper presents three main conclusions: First, the proposed methodology achieves a 23% improvement in accuracy over baseline approaches. Second, the computational overhead is minimal, adding only 4ms latency on average. Third, the results generalize well across different datasets...<span class="cursor2"></span></div>
+        <div class="ans-foot">
+          <span class="mf">Chars: <span class="mfv">312</span></span>
+          <span class="mf">Model: <span class="mfv">llama3</span></span>
+          <span class="mf">Mode: <span class="mfv">QA</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rcol">
+    <div class="robo-wrap">
+      <div class="robo-name">NOVA ROBO</div>
+      <div style="font-size:7px;color:rgba(180,79,255,.4);text-align:center;margin-top:-4px">Ollama · Local LLM</div>
+      <canvas id="rc" width="170" height="170" style="border-radius:6px"></canvas>
+      <div class="robo-stage" id="rs">Streaming tokens...</div>
+      <div style="width:100%">
+        <div class="sec-t" style="margin-bottom:5px"><div class="dot3" style="background:var(--purple)"></div>Personality</div>
+        <div class="p-grid">
+          <button class="pb sel">💼 Pro</button>
+          <button class="pb">😎 Casual</button>
+          <button class="pb">⚡ Concise</button>
+          <button class="pb">📚 Deep</button>
+          <button class="pb">🎨 Creative</button>
+          <button class="pb">🤔 Socratic</button>
+        </div>
+      </div>
+      <div class="thought-wrap">
+        <div class="thought-lbl">Robo Thoughts</div>
+        <div class="thought-txt" id="tt">Streaming tokens to output...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+const sc=document.getElementById('sc'),bx=sc.getContext('2d');
+function rsz(){sc.width=sc.parentElement.offsetWidth;sc.height=sc.parentElement.offsetHeight}rsz();
+const stars=[],nebulae=[],shoots=[];
+for(let i=0;i<250;i++)stars.push({x:Math.random()*9999,y:Math.random()*9999,r:Math.random()*1.3+.2,t:Math.random()*Math.PI*2,s:.02+Math.random()*.03,b:.4+Math.random()*.6});
+for(let i=0;i<4;i++)nebulae.push({x:Math.random(),y:Math.random(),rx:80+Math.random()*110,ry:50+Math.random()*80,h:Math.random()>.5?195:275,o:.03+Math.random()*.035});
+setInterval(()=>shoots.push({x:Math.random()*.7,y:Math.random()*.4,vx:4+Math.random()*5,vy:2+Math.random()*3,life:1}),3200);
+function drawBg(){
+  bx.clearRect(0,0,sc.width,sc.height);bx.fillStyle='#020510';bx.fillRect(0,0,sc.width,sc.height);
+  nebulae.forEach(n=>{const g=bx.createRadialGradient(n.x*sc.width,n.y*sc.height,0,n.x*sc.width,n.y*sc.height,n.rx);g.addColorStop(0,`hsla(${n.h},100%,60%,${n.o})`);g.addColorStop(1,'transparent');bx.beginPath();bx.ellipse(n.x*sc.width,n.y*sc.height,n.rx,n.ry,0,0,Math.PI*2);bx.fillStyle=g;bx.fill();});
+  stars.forEach(s=>{s.t+=s.s;const b=s.b*(.6+.4*Math.sin(s.t));bx.beginPath();bx.arc(s.x%sc.width,s.y%sc.height,s.r,0,Math.PI*2);bx.fillStyle=`rgba(200,230,255,${b})`;bx.fill();});
+  for(let i=shoots.length-1;i>=0;i--){const s=shoots[i];s.life-=.025;if(s.life<=0){shoots.splice(i,1);continue}const sx=s.x*sc.width,sy=s.y*sc.height;bx.beginPath();bx.moveTo(sx,sy);bx.lineTo(sx-s.vx*16,sy-s.vy*16);const g=bx.createLinearGradient(sx,sy,sx-s.vx*16,sy-s.vy*16);g.addColorStop(0,`rgba(0,255,229,${s.life})`);g.addColorStop(1,'transparent');bx.strokeStyle=g;bx.lineWidth=1.4;bx.stroke();s.x+=s.vx*.001;s.y+=s.vy*.001;}
+  requestAnimationFrame(drawBg);
+}drawBg();
+
+const rc2=document.getElementById('rc').getContext('2d');
+let rf=0,sp=72;
+const tArr=['Streaming tokens...','Generating answer...','Augmenting context...','Cross-checking facts...'];
+let ti=0;
+setInterval(()=>{ti=(ti+1)%tArr.length;document.getElementById('tt').textContent=tArr[ti];sp=Math.min(99,sp+Math.random()*5);},900);
+
+function drawRobo(){
+  rc2.clearRect(0,0,170,170);const t=rf*.04,cx=85,cy=85;
+  const hov=Math.sin(t*4)*3;rc2.save();rc2.translate(cx,cy+hov);
+  const pu=.5+.5*Math.sin(t*5);rc2.strokeStyle=`rgba(57,255,138,${.12+pu*.28})`;rc2.lineWidth=2.5;rc2.beginPath();rc2.arc(0,0,58,0,Math.PI*2);rc2.stroke();
+  rc2.fillStyle='#0a1a3a';rc2.strokeStyle='rgba(57,255,138,.75)';rc2.lineWidth=1.5;rc2.beginPath();rc2.roundRect(-27,-32,54,64,8);rc2.fill();rc2.stroke();
+  rc2.fillStyle='#061228';rc2.strokeStyle='rgba(57,255,138,.3)';rc2.lineWidth=1;rc2.beginPath();rc2.roundRect(-19,-26,38,26,4);rc2.fill();rc2.stroke();
+  rc2.fillStyle=`rgba(57,255,138,${.65+pu*.3})`;rc2.beginPath();rc2.arc(-10,-14,4.5,0,Math.PI*2);rc2.fill();rc2.beginPath();rc2.arc(10,-14,4.5,0,Math.PI*2);rc2.fill();
+  const dx=[-7,-3.5,0,3.5,7];dx.forEach((x,i)=>{rc2.globalAlpha=.3+.7*Math.abs(Math.sin(t*5+i*.8));rc2.fillStyle='rgba(57,255,138,.8)';rc2.beginPath();rc2.arc(x,-4,1.7,0,Math.PI*2);rc2.fill();});rc2.globalAlpha=1;
+  rc2.fillStyle='rgba(57,255,138,.1)';rc2.beginPath();rc2.roundRect(-18,4,36,10,2);rc2.fill();
+  rc2.fillStyle='rgba(57,255,138,.6)';rc2.beginPath();rc2.roundRect(-18,4,36*(sp/100),10,2);rc2.fill();
+  rc2.fillStyle='rgba(57,255,138,.65)';rc2.font='bold 6px monospace';rc2.textAlign='center';rc2.fillText('GENERATING',0,24);
+  const a1=Math.sin(t*5)*22,a2=Math.cos(t*5)*22;rc2.strokeStyle='rgba(57,255,138,.45)';rc2.lineWidth=1.3;
+  rc2.save();rc2.translate(-27,-10);rc2.rotate(a1*Math.PI/180);rc2.beginPath();rc2.moveTo(0,0);rc2.lineTo(-13,0);rc2.lineTo(-13,16);rc2.stroke();rc2.restore();
+  rc2.save();rc2.translate(27,-10);rc2.rotate(-a2*Math.PI/180);rc2.beginPath();rc2.moveTo(0,0);rc2.lineTo(13,0);rc2.lineTo(13,16);rc2.stroke();rc2.restore();
+  rc2.restore();rf++;requestAnimationFrame(drawRobo);
+}drawRobo();
+</script>

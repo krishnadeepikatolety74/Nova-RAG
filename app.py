@@ -1,9 +1,11 @@
 import os
+import sys
 import json
 import uuid
 import threading
 import time
 import sqlite3
+import webbrowser
 
 from pathlib import Path
 from typing import Optional
@@ -1173,6 +1175,12 @@ def run_ngrok_delayed():
 
     start_ngrok()
 
+def run_browser_delayed():
+
+    time.sleep(1.5)
+
+    webbrowser.open(f"http://localhost:{PORT}")
+
 # ─────────────────────────────────────────────
 # MAIN
 # ─────────────────────────────────────────────
@@ -1198,6 +1206,12 @@ if __name__ == "__main__":
         target=run_ngrok_delayed,
         daemon=True
     ).start()
+
+    if "open" in sys.argv:
+        threading.Thread(
+            target=run_browser_delayed,
+            daemon=True
+        ).start()
 
     uvicorn.run(
         "app:app",
